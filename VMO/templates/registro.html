@@ -1,0 +1,36 @@
+<h1>Registros</h1>
+
+<h2>{% if edit_id %}Editar Registro{% else %}Novo Registro{% endif %}</h2>
+{% if edit_id %}{% url 'registro_update' edit_id %}{% else %}{% url 'registro_create' %}{% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+</form>
+
+<hr>
+
+<h2>Lista de Registros</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>KM Inicial</th>
+        <th>KM Final</th>
+        <th>Responsável</th>
+        <th>Ações</th>
+    </tr>
+
+    {% for r in registros %}
+    <tr>
+        <td>{{ r.ID_registro }}</td>
+        <td>{{ r.ClienteUnidade }}</td>
+        <td>{{ r.km_inicial }}</td>
+        <td>{{ r.km_final }}</td>
+        <td>{{ r.responsavel }}</td>
+        <td>
+            {% url 'registro_update' r.ID_registro %}
+            {% url 'registro_delete' r.ID_registro %}>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

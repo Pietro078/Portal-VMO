@@ -1,22 +1,16 @@
-"""
-URL configuration for core project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
 from django.urls import path
+from VMO.views import view_crud
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # CLIENTES
+    path('clientes/', view_crud.cliente_list, name='cliente_list'),
+    path('clientes/salvar/', view_crud.cliente_save, name='cliente_create'),
+    path('clientes/salvar/<int:id>/', view_crud.cliente_save, name='cliente_update'),
+    path('clientes/deletar/<int:id>/', view_crud.cliente_delete, name='cliente_delete'),
+
+    # REGISTROS
+    path('registros/', view_crud.registro_list, name='registro_list'),
+    path('registros/salvar/', view_crud.registro_save, name='registro_create'),
+    path('registros/salvar/<int:id>/', view_crud.registro_save, name='registro_update'),
+    path('registros/deletar/<int:id>/', view_crud.registro_delete, name='registro_delete'),
 ]

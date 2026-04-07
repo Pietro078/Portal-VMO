@@ -1,0 +1,10 @@
+<h1>Cliente</h1>
+
+<form action="{% url 'cliente' %}" method="post">
+    {% csrf_token %}
+
+    <input type="text" name="cliente" placeholder="Cliente">
+    <input type="email"  name="unidade" placeholder="Unidade">
+    <input type="email"  name="uf" placeholder="UF">
+
+    <button type="submit">Salvar</button>
