@@ -1,10 +1,40 @@
 <h1>Cliente</h1>
 
-<form action="{% url 'cliente' %}" method="post">
+<form action="{% url 'cliente_list' %}" method="post">
     {% csrf_token %}
 
     <input type="text" name="cliente" placeholder="Cliente">
-    <input type="email"  name="unidade" placeholder="Unidade">
-    <input type="email"  name="uf" placeholder="UF">
+    <input type="text"  name="unidade" placeholder="Unidade">
+    <input type="text"  name="uf" placeholder="UF">
 
-    <button type="submit">Salvar</button>
+    <button type="submit">Criar</button>   
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Unidade</th>
+        <th>UF</th>
+    </tr>
+
+    {% for a in TB_cliente %}
+    <tr>
+        <td>{{ a.ID_cliente }}</td>
+        <td>{{ a.Cliente }}</td>
+        <td>{{ a.Unidade }}</td>
+        <td>{{ a.UF }}</td>
+        <td><button>✏️</button></td>
+        <td>
+            <form action="{% url 'cliente_delete' a.ID_cliente %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">❌</button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Nenhum cliente cadastrado</td>
+    </tr>
+    {% endfor %}
+</table>

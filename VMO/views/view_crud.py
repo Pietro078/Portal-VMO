@@ -2,20 +2,29 @@ from django.shortcuts import render, redirect, get_object_or_404
 from ..models import Cliente, Registro
 
 def cliente(request):
-    if request.method == "POST":
-        # Aqui você pega os dados enviados pelo formulário
-        nome = request.POST.get("nome")
-        email = request.POST.get("email")
+    if request.method == "GET":
+        return render(request, "cliente.html", {"TB_cliente":Cliente.objects.all()})
 
-        # Exemplo: cria um Cliente
-        novo_cliente = Cliente.objects.create(
-            nome=nome,
-            email=email
+    if request.method == "POST":
+        cliente = request.POST.get("cliente")
+        unidade = request.POST.get("unidade")
+        uf = request.POST.get("uf")
+
+        print(cliente, "====", unidade, "====", uf)
+
+        #! VALIDAÇÃO: verificar se já existe
+        if Cliente.objects.filter(Unidade=unidade).exists():
+            return render(request, "cliente.html", {
+                "erro": "Já existe uma unidade cadastrada com esse nome!"
+            })
+
+        #! Se não existir, salva
+        Cliente.objects.create(
+            Cliente=cliente,
+            Unidade=unidade,
+            UF=uf
         )
 
-        # Depois de salvar, é comum redirecionar para evitar salvar duplicado no F5
-        return redirect("cliente_lista")  # ou a página que você quiser
+        return redirect("cliente_list")
 
-    # Se não for POST, então é GET (abrir a página/form)
-    clientes = Cliente.objects.all()
-    return render(request, "cliente.html", {"clientes": clientes})
+    return render(request, "cliente.html")

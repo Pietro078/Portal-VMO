@@ -4,7 +4,7 @@ class Cliente(models.Model):
     ID_cliente = models.AutoField(primary_key=True)
     Cliente = models.CharField(max_length=150)
     Unidade = models.CharField(max_length=100, unique=True)
-    UF = models.CharField(max_length=2)
+    UF = models.CharField(max_length=9)
 
     def __str__(self):
         return f"{self.Cliente} - {self.Unidade} ({self.UF})"
