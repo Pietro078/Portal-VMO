@@ -1,0 +1,77 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/css_cliente.css' %}">
+
+<div class="top-bar">
+    <a href="{% url 'registro' %}">
+        <button class="btn-registros">Registros</button>
+    </a>
+</div>
+
+<h1>Cliente</h1>
+
+
+<form id="formCliente" action="{% url 'cliente' %}" method="post">
+    {% csrf_token %}
+
+    <!-- ID escondido -->
+    <input type="hidden" name="id" id="id_cliente">
+
+    <input type="text" name="cliente" id="cliente" placeholder="Cliente">
+    <input type="text" name="unidade" id="unidade" placeholder="Unidade">
+    <input type="text" name="codigo_unidade" id="codigo_unidade" placeholder="Código unidade">
+    <input type="text" name="uf" id="uf" placeholder="UF">
+
+    <button type="submit" id="btnSubmit">Criar</button>   
+</form>
+
+{% if erro %}
+<h3>{{ erro }}</h3>
+{% endif %}
+
+<table border="1">
+    <tr>
+
+        <th>Cliente</th>
+        <th>Unidade</th>
+        <th>Código Unidade</th>
+        <th>UF</th>
+        <th>Edição</th>
+    </tr>
+
+    {% for a in cliente %}
+    <tr>
+
+        <td>{{ a.Cliente }}</td>
+        <td>{{ a.Unidade }}</td>
+        <td>{{ a.Codigo_unidade }}</td>
+        <td>{{ a.UF }}</td>
+
+        <td>
+            <!-- botão editar -->
+            <button type="button"
+                onclick="editarCliente('{{ a.ID_cliente }}','{{ a.Cliente }}','{{ a.Unidade }}','{{ a.Codigo_unidade }}','{{ a.UF }}')">
+                ✏️
+            </button>
+
+            <!-- delete -->
+            <form action="{% url 'cliente_delete' a.ID_cliente %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">❌</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- JS -->
+<script>
+function editarCliente(id, cliente, unidade, codigo, uf) {
+    document.getElementById('id_cliente').value = id;
+    document.getElementById('cliente').value = cliente;
+    document.getElementById('unidade').value = unidade;
+    document.getElementById('codigo_unidade').value = codigo;
+    document.getElementById('uf').value = uf;
+
+    document.getElementById('btnSubmit').innerText = "Atualizar";
+}
+</script>
