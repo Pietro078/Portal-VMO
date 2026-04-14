@@ -2,12 +2,33 @@
 <link rel="stylesheet" href="{% static 'css/css_registro.css'%}">
 <h1>Registros</h1>
 
-<form action="">
 <h2>Novo registro</h2>
+<form action="">
     {% csrf_token %}
     
-    <input type="text" name="" placeholder="">
-    <input type="number" name="" placeholder="">
+    <select name="unidade" required>
+        <option value="">Selecione Unidade</option>
+        {% for a in cliente %}
+            <option value="{{ a.Unidade }}">
+                {{ a.Unidade }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="number" name="" placeholder="KM inicial">
+    <input type="number" name="" placeholder="KM Final">
+    
+    <input type="" name="" placeholder="Observações">
+
+    <select name="responsavel" required>
+        <option value="">Selecione Responsável</option>
+            <option value="">Andrei</option>
+            <option value="">Pietro</option>
+            <option value="">Elisama</option>
+            <option value="">Fernando</option>
+        
+    </select>
+
+    <p></p>
 
     <button type="submit">Salvar</button>
 </form>
